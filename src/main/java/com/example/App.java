@@ -7,7 +7,6 @@ import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.example.models.Student;
@@ -36,12 +35,15 @@ public class App {
                 .build();
 
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        session.beginTransaction();
 
         session.persist(student);
 
-        transaction.commit();
+        System.out.println((Student) session.get(Student.class, 1));
+
+        session.getTransaction().commit();
         session.close();
+        sessionFactory.close();
     }
 
 }
